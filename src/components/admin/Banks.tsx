@@ -11,8 +11,8 @@ import {
   ChatDots,
 } from "react-bootstrap-icons";
 
-function Transaction() {
-  const [active, setActive] = useState("Transactions");
+function Banks() {
+  const [active, setActive] = useState("Banks");
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const navigate = useNavigate();
 
@@ -247,4 +247,4 @@ function Transaction() {
   );
 }
 
-export default Transaction;
+export default Banks;

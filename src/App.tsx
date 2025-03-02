@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Register from "./components/Register";
 import AdminDashboard from "./components//admin/AdminDashboard";
 import Login from "./components/Login";
+import Banks from "./components/admin/Banks";
 import InAuction from "./components/admin/InAuction";
 import Managers from "./components/admin/Managers";
 import Messages from "./components/admin/Messages";
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Login />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/banks" element={<Banks />} />
           <Route path="/in-auction" element={<InAuction />} />
           <Route path="/managers" element={<Managers />} />
           <Route path="/messages" element={<Messages />} />

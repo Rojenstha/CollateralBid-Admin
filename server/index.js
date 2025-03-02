@@ -2,6 +2,8 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 const AdminModel = require('./models/admin')
+const BankModel = require("./models/bank")
+const ManagerModel = require("./models/manager")
 
 const app = express()
 app.use(express.json())
@@ -30,6 +32,19 @@ app.post('/register', (req, res)=>{
     .then(admin => res.json(admin))
     .catch(error => res.json(error))
 })
+
+app.post('/registerbank', (req, res)=>{
+    BankModel.create(req.body)
+    .then(bank=> res.json(bank))
+    .catch(error=>res.json(error))
+})
+
+app.post('/registermanager', (req, res)=>{
+    ManagerModelModel.create(req.body)
+    .then(manager=> res.json(manager))
+    .catch(error=>res.json(error))
+})
+
 
 app.listen(3001, () => {
     console.log("Server is running...")
