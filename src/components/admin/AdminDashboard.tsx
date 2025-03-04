@@ -35,7 +35,12 @@ function AdminDashboard() {
             to=""
             className="d-flex align-items-center mb-3 text-white text-decoration-none"
           >
-            <span className="fs-3">CollateralBid - Admin</span>
+            <img
+              src="/src/assets/logo2.png"
+              alt="Logo"
+              width="211"
+              height="72"
+            />
           </Link>
           <hr />
           <ul className="nav nav-pills flex-column mb-auto">

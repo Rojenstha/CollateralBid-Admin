@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Dropdown, Modal, Button } from "react-bootstrap";
+import { Dropdown, Modal, Button, Form, InputGroup } from "react-bootstrap";
 import {
   House,
   Grid,
@@ -9,12 +9,41 @@ import {
   CreditCard,
   Bank,
   ChatDots,
+  PlusCircle,
 } from "react-bootstrap-icons";
+import axios from "axios";
 
 function Managers() {
   const [active, setActive] = useState("Managers");
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [showAddPopup, setShowAddPopup] = useState(false);
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [bank, setBank] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/registermanager",
+        {
+          name,
+          phone,
+          bank,
+          email,
+          password,
+        }
+      );
+      setMessage(response.data.message);
+    } catch (error: any) {
+      setMessage(error.response?.data?.error || "Signup Failed.");
+    }
+  };
 
   const handleLogout = () => setShowLogoutPopup(true);
   const confirmLogout = () => {
@@ -35,7 +64,12 @@ function Managers() {
             to=""
             className="d-flex align-items-center mb-3 text-white text-decoration-none"
           >
-            <span className="fs-3">CollateralBid - Admin</span>
+            <img
+              src="/src/assets/logo2.png"
+              alt="Logo"
+              width="211"
+              height="72"
+            />
           </Link>
           <hr />
           <ul className="nav nav-pills flex-column mb-auto">
@@ -189,42 +223,14 @@ function Managers() {
               </Link>
             </div>
           </div>
-
-          <div className="row g-4 mt-4">
-            <div className="col-12 col-md-4">
-              <Link to="/in-auction">
-                <div className="bg-success text-white p-3 rounded shadow-sm text-center">
-                  <h4>
-                    <Grid className="me-2" />
-                    Number of Auctions
-                  </h4>
-                  <h2>350</h2>
-                </div>
-              </Link>
-            </div>
-            <div className="col-12 col-md-4">
-              <Link to="/transaction">
-                <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
-                  <h4>
-                    <CreditCard className="me-2" />
-                    Transactions Made
-                  </h4>
-                  <h2>8</h2>
-                </div>
-              </Link>
-            </div>
-            <div className="col-12 col-md-4">
-              <Link to="/messages">
-                <div className="bg-primary text-white p-3 rounded shadow-sm text-center">
-                  <h4>
-                    <ChatDots className="me-2" />
-                    Messages
-                  </h4>
-                  <h2>15</h2>
-                </div>
-              </Link>
-            </div>
-          </div>
+          {/* Add Manager Button */}
+          <Button
+            variant="primary"
+            className="mt-4 d-flex align-items-center"
+            onClick={() => setShowAddPopup(true)}
+          >
+            <PlusCircle className="me-2" /> Add Manager
+          </Button>
         </div>
       </div>
 
@@ -242,6 +248,82 @@ function Managers() {
             Sign out
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      {/* Add Manager Modal */}
+      <Modal show={showAddPopup} onHide={() => setShowAddPopup(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Manager</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {message && <p className="alert alert-info">{message}</p>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                name="username"
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Phone Number</Form.Label>
+              <InputGroup>
+                <InputGroup.Text>+977</InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  name="number"
+                  value={phone} // Ensure the input reflects state
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    if (value.length <= 10) {
+                      setPhone(value);
+                    }
+                  }}
+                  required
+                  placeholder="Enter 10-digit number"
+                />
+              </InputGroup>
+              {phone.length !== 10 && phone.length > 0 && (
+                <p className="text-danger mt-1">
+                  Phone number must be 10 digits
+                </p>
+              )}
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Bank Code</Form.Label>
+              <Form.Control
+                type="text"
+                name="bankCode"
+                onChange={(e) => setBank(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="text"
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Button variant="success" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
       </Modal>
     </>
   );

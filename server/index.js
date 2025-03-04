@@ -4,6 +4,7 @@ const cors = require("cors")
 const AdminModel = require('./models/admin')
 const BankModel = require("./models/bank")
 const ManagerModel = require("./models/manager")
+const bcrypt = require("bcryptjs")
 
 const app = express()
 app.use(express.json())
@@ -39,11 +40,23 @@ app.post('/registerbank', (req, res)=>{
     .catch(error=>res.json(error))
 })
 
-app.post('/registermanager', (req, res)=>{
-    ManagerModelModel.create(req.body)
-    .then(manager=> res.json(manager))
-    .catch(error=>res.json(error))
-})
+app.post("/registermanager", async (req, res) => {
+    const { name, email, password, phone, bank } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+  
+    try {
+      const existingUser = await ManagerModel.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ error: "Email already registered" });
+      }
+  
+      const user = new ManagerModel({ name, email, bank, phone, password: hashedPassword });
+      await user.save();
+      res.json({ message: "User registered successfully!" });
+    } catch (error) {
+      res.status(500).json({ error: "Error registering user" });
+    }
+  });
 
 
 app.listen(3001, () => {
