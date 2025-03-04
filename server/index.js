@@ -34,10 +34,20 @@ app.post('/register', (req, res)=>{
     .catch(error => res.json(error))
 })
 
-app.post('/registerbank', (req, res)=>{
-    BankModel.create(req.body)
-    .then(bank=> res.json(bank))
-    .catch(error=>res.json(error))
+app.post('/registerbank', async (req, res)=>{
+    const { name, code, contact } = req.body;
+    try{
+        const existBank = await BankModel.findOne({ name });
+        if (existBank){
+            return res.status(401).json({ error: "Bank already Registered."});
+        }
+
+        const bank = new BankModel({ name, code, contact});
+        await bank.save();
+        res.json({ message: "Bank registered successfully!" });
+    } catch (error) {
+      res.status(501).json({ error: "Error registering Bank." });
+    }
 })
 
 app.post("/registermanager", async (req, res) => {

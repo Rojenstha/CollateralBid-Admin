@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 const BankSchema = new mongoose.Schema({
     name: String,
-    id_number: Number 
+    code: String, 
+    contact: Number
 })
 
 const BankModel = mongoose.model("bank", BankSchema)

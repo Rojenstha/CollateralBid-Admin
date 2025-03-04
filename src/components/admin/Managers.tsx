@@ -41,7 +41,7 @@ function Managers() {
       );
       setMessage(response.data.message);
     } catch (error: any) {
-      setMessage(error.response?.data?.error || "Signup Failed.");
+      setMessage(error.response?.data?.error || "Registration Failed.");
     }
   };
 
@@ -188,18 +188,7 @@ function Managers() {
 
           {/* Statistics */}
           <div className="row g-4">
-            <div className="col-12 col-md-4">
-              <Link to="/users">
-                <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
-                  <h4>
-                    <People className="me-2" />
-                    Users
-                  </h4>
-                  <h2>25</h2>
-                </div>
-              </Link>
-            </div>
-            <div className="col-12 col-md-4">
+            <div className="col-12 col-md-6">
               <Link to="/managers">
                 <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
                   <h4>
@@ -211,7 +200,7 @@ function Managers() {
               </Link>
             </div>
 
-            <div className="col-12 col-md-4">
+            <div className="col-12 col-md-6">
               <Link to="/banks">
                 <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
                   <h4>
@@ -229,7 +218,8 @@ function Managers() {
             className="mt-4 d-flex align-items-center"
             onClick={() => setShowAddPopup(true)}
           >
-            <PlusCircle className="me-2" /> Add Manager
+            <PlusCircle className="me-2" /> Add Manager{" "}
+            <People className="me-2" />
           </Button>
         </div>
       </div>
@@ -274,7 +264,7 @@ function Managers() {
                 <Form.Control
                   type="text"
                   name="number"
-                  value={phone} // Ensure the input reflects state
+                  value={phone}
                   onChange={(e) => {
                     const value = e.target.value.replace(/\D/g, "");
                     if (value.length <= 10) {
