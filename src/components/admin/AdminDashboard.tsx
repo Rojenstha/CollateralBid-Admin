@@ -9,6 +9,8 @@ import {
   CreditCard,
   Bank,
   ChatDots,
+  Check,
+  GraphUpArrow,
 } from "react-bootstrap-icons";
 
 function AdminDashboard() {
@@ -112,6 +114,28 @@ function AdminDashboard() {
             </li>
             <li>
               <Link
+                to="/verifyauctions"
+                className={`nav-link ${
+                  active === "VerifyAuction" ? "active" : "text-white"
+                }`}
+                onClick={() => setActive("VerifyAuction")}
+              >
+                <GraphUp className="me-2" /> Verfiy Auction
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/verifyusers"
+                className={`nav-link ${
+                  active === "VerifyUser" ? "active" : "text-white"
+                }`}
+                onClick={() => setActive("VerifyUser")}
+              >
+                <Check className="me-2" /> Verify Users
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/messages"
                 className={`nav-link ${
                   active === "Messages" ? "active" : "text-white"
@@ -166,7 +190,7 @@ function AdminDashboard() {
                     <People className="me-2" />
                     Users
                   </h4>
-                  <h2>25</h2>
+                  <h2>250</h2>
                 </div>
               </Link>
             </div>
@@ -197,13 +221,24 @@ function AdminDashboard() {
 
           <div className="row g-4 mt-4">
             <div className="col-12 col-md-4">
-              <Link to="/in-auction">
-                <div className="bg-success text-white p-3 rounded shadow-sm text-center">
+              <Link to="/verifyusers">
+                <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
                   <h4>
-                    <Grid className="me-2" />
-                    Number of Auctions
+                    <Check className="me-2" />
+                    Verified Users
                   </h4>
-                  <h2>350</h2>
+                  <h2>25</h2>
+                </div>
+              </Link>
+            </div>
+            <div className="col-12 col-md-4">
+              <Link to="/verifyauctions">
+                <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
+                  <h4>
+                    <GraphUpArrow className="me-2" />
+                    Verified Auctions
+                  </h4>
+                  <h2>8</h2>
                 </div>
               </Link>
             </div>
@@ -215,6 +250,20 @@ function AdminDashboard() {
                     Transactions Made
                   </h4>
                   <h2>8</h2>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          <div className="row g-4 mt-4">
+            <div className="col-12 col-md-4">
+              <Link to="/in-auction">
+                <div className="bg-success text-white p-3 rounded shadow-sm text-center">
+                  <h4>
+                    <Grid className="me-2" />
+                    Number of Auctions
+                  </h4>
+                  <h2>350</h2>
                 </div>
               </Link>
             </div>

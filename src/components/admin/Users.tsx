@@ -10,6 +10,7 @@ import {
   Bank,
   ChatDots,
   PlusCircle,
+  Check,
 } from "react-bootstrap-icons";
 import axios from "axios";
 
@@ -136,6 +137,28 @@ function Users() {
             </li>
             <li>
               <Link
+                to="/verifyauctions"
+                className={`nav-link ${
+                  active === "VerifyAuction" ? "active" : "text-white"
+                }`}
+                onClick={() => setActive("VerifyAuction")}
+              >
+                <GraphUp className="me-2" /> Verfiy Auction
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/verifyusers"
+                className={`nav-link ${
+                  active === "VerifyUser" ? "active" : "text-white"
+                }`}
+                onClick={() => setActive("VerifyUser")}
+              >
+                <Check className="me-2" /> Verify Users
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/messages"
                 className={`nav-link ${
                   active === "Messages" ? "active" : "text-white"
@@ -183,14 +206,28 @@ function Users() {
 
           {/* Statistics */}
           <div className="row g-4">
-            <div className="col-12 col-md-12">
-              <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
-                <h4>
-                  <People className="me-2" />
-                  Total Number of Users:
-                </h4>
-                <h2>25</h2>
-              </div>
+            <div className="col-12 col-md-6">
+              <Link to="/users">
+                <div className="bg-secondary text-white p-3 rounded shadow-sm text-center">
+                  <h4>
+                    <People className="me-2" />
+                    Total Users
+                  </h4>
+                  <h2>250</h2>
+                </div>
+              </Link>
+            </div>
+
+            <div className="col-12 col-md-6">
+              <Link to="/verifyusers">
+                <div className="bg-success text-white p-3 rounded shadow-sm text-center">
+                  <h4>
+                    <Check className="me-2" />
+                    Verfied Users
+                  </h4>
+                  <h2>30</h2>
+                </div>
+              </Link>
             </div>
           </div>
 

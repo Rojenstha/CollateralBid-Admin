@@ -10,6 +10,7 @@ import {
   Bank,
   ChatDots,
   PlusCircle,
+  Check,
 } from "react-bootstrap-icons";
 import axios from "axios";
 
@@ -137,6 +138,28 @@ function Managers() {
                 onClick={() => setActive("Customers")}
               >
                 <People className="me-2" /> Customers
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/verifyauctions"
+                className={`nav-link ${
+                  active === "VerifyAuction" ? "active" : "text-white"
+                }`}
+                onClick={() => setActive("VerifyAuction")}
+              >
+                <GraphUp className="me-2" /> Verfiy Auction
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/verifyusers"
+                className={`nav-link ${
+                  active === "VerifyUser" ? "active" : "text-white"
+                }`}
+                onClick={() => setActive("VerifyUser")}
+              >
+                <Check className="me-2" /> Verify Users
               </Link>
             </li>
             <li>

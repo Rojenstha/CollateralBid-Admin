@@ -9,6 +9,8 @@ import Managers from "./components/admin/Managers";
 import Messages from "./components/admin/Messages";
 import Transaction from "./components/admin/Transaction";
 import Users from "./components/admin/Users";
+import VerifyAuction from "./components/admin/VerifyAuction";
+import VerifyUser from "./components/admin/VerifyUser";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/messages" element={<Messages />} />
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/verifyauctions" element={<VerifyAuction />} />
+          <Route path="/verifyusers" element={<VerifyUser />} />
         </Routes>
       </Router>
     </div>
