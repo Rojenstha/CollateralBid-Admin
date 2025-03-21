@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Modal, Button } from "react-bootstrap";
 import {
@@ -12,6 +12,7 @@ import {
   Check,
   GraphUpArrow,
 } from "react-bootstrap-icons";
+import axios from "axios";
 
 function AdminDashboard() {
   const [active, setActive] = useState("Home");
@@ -23,6 +24,36 @@ function AdminDashboard() {
     localStorage.removeItem("token");
     setShowLogoutPopup(false);
     navigate("/");
+  };
+
+  const [managers, setManagers] = useState([]);
+
+  useEffect(() => {
+    fetchManagers();
+  }, []);
+
+  const fetchManagers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/allmanagers");
+      setManagers(response.data);
+    } catch (error) {
+      console.error("Error fetching managers:", error);
+    }
+  };
+
+  const [banks, setBanks] = useState([]);
+
+  useEffect(() => {
+    fetchBanks();
+  }, []);
+
+  const fetchBanks = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/allbanks");
+      setBanks(response.data);
+    } catch (error) {
+      console.error("Error fetching managers:", error);
+    }
   };
 
   return (
@@ -201,7 +232,7 @@ function AdminDashboard() {
                     <People className="me-2" />
                     Managers
                   </h4>
-                  <h2>12</h2>
+                  <h2>{managers.length}</h2>
                 </div>
               </Link>
             </div>
@@ -213,7 +244,7 @@ function AdminDashboard() {
                     <Bank className="me-2" />
                     Associated Banks
                   </h4>
-                  <h2>10</h2>
+                  <h2>{banks.length}</h2>
                 </div>
               </Link>
             </div>

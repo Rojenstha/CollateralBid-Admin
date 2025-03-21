@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Dropdown, Modal, Button, Form, InputGroup } from "react-bootstrap";
+import {
+  Dropdown,
+  Modal,
+  Button,
+  Form,
+  InputGroup,
+  Table,
+} from "react-bootstrap";
 import {
   House,
   Grid,
@@ -27,6 +34,43 @@ function Managers() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  interface Manager {
+    _id: string;
+    name: string;
+    phone: string;
+    bank: string;
+    email: string;
+  }
+  const [managers, setManagers] = useState<Manager[]>([]);
+
+  useEffect(() => {
+    fetchManagers();
+  }, []);
+
+  const fetchManagers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/allmanagers");
+      setManagers(response.data);
+    } catch (error) {
+      console.error("Error fetching managers:", error);
+    }
+  };
+
+  const [banks, setBanks] = useState([]);
+
+  useEffect(() => {
+    fetchBanks();
+  }, []);
+
+  const fetchBanks = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/allbanks");
+      setBanks(response.data);
+    } catch (error) {
+      console.error("Error fetching managers:", error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -41,6 +85,7 @@ function Managers() {
         }
       );
       setMessage(response.data.message);
+      fetchManagers();
     } catch (error: any) {
       setMessage(error.response?.data?.error || "Registration Failed.");
     }
@@ -218,7 +263,7 @@ function Managers() {
                     <People className="me-2" />
                     Managers
                   </h4>
-                  <h2>12</h2>
+                  <h2>{managers.length}</h2>
                 </div>
               </Link>
             </div>
@@ -230,7 +275,7 @@ function Managers() {
                     <Bank className="me-2" />
                     Associated Banks
                   </h4>
-                  <h2>10</h2>
+                  <h2>{banks.length}</h2>
                 </div>
               </Link>
             </div>
@@ -244,10 +289,32 @@ function Managers() {
             <PlusCircle className="me-2" /> Add Manager{" "}
             <People className="me-2" />
           </Button>
+
+          {/* Managers Table */}
+          <Table striped bordered hover className="mt-4">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Bank</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {managers.map((manager: Manager) => (
+                <tr key={manager._id}>
+                  <td>{manager.name}</td>
+                  <td>{manager.phone}</td>
+                  <td>{manager.bank}</td>
+                  <td>{manager.email}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
       </div>
 
-      {/* Logout Confirmation Modal */}
+      {/* Logout Confirmation */}
       <Modal show={showLogoutPopup} onHide={() => setShowLogoutPopup(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Logout</Modal.Title>
@@ -263,7 +330,7 @@ function Managers() {
         </Modal.Footer>
       </Modal>
 
-      {/* Add Manager Modal */}
+      {/* Add Manager */}
       <Modal show={showAddPopup} onHide={() => setShowAddPopup(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Manager</Modal.Title>

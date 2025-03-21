@@ -68,6 +68,23 @@ app.post("/registermanager", async (req, res) => {
     }
   });
 
+app.get("/allmanagers", async(req,res)=>{
+    try{
+        const allmanagers = await ManagerModel.find();
+        res.json(allmanagers);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+})
+
+app.get("/allbanks", async(req,res)=>{
+    try{
+        const allbanks = await BankModel.find();
+        res.json(allbanks);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+})
 
 app.listen(3001, () => {
     console.log("Server is running...")
